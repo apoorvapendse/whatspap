@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {AppBar,Box,Dialog,Toolbar,Image} from '@mui/material'
 import './styles/LoginPage.css'
 import { GoogleLogin,useGoogleOneTapLogin } from '@react-oauth/google';
 import jwtDecode from 'jwt-decode'
+import LoginContext from '../user-context/UserLoginContext';
 
 const LoginPage = () => {
 
-
-  const handleLoginSuccess = (response)=>{console.log(
-    jwtDecode(response.credential))}
+  const {currentUser, setCurrentUser }= useContext(LoginContext);
+  const handleLoginSuccess = (response)=>{
+   
+    const userData = jwtDecode(response.credential)
+    setCurrentUser(userData);
+  }
   const handleLoginFailure =(response)=>{console.log(response)}
 
   return (
@@ -25,15 +29,19 @@ const LoginPage = () => {
         />
 
         <Dialog 
-        
+        hideBackdrop
+  sx={{
+    backgroundColor:"rgba(0,0, 0, 0.06)"
+  }}
         open={true}
         PaperProps={{
+          
             sx: { 
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
               height: "90%",
-            backgroundColor:"whitesmoke"
+            backgroundColor:"#1f1f1f"
             ,minWidth:"80%",marginTop:"12vh",
           boxShadow:"none" } 
           }}
