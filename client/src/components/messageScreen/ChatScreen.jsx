@@ -39,6 +39,7 @@ const ChatScreen = () => {
 
                   <Box display={'flex'}
                       sx={{
+                        overflowY:"hidden",
                           width: "100%",
                           height: "100%",
                       }}
@@ -61,7 +62,7 @@ const ChatScreen = () => {
                         minWidth:"700px",
                           width: "75%",
                           height: "100%",
-                          backgroundColor: "blue",
+                          backgroundColor: "#1d1d1d",
                           display:"flex",
                           justifyContent:"center"
                       }}>

@@ -3,7 +3,12 @@ import {MoreVert} from '@mui/icons-material'
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useDrawerContext } from './profile-drawer-manager/ProfileDetailsContext';
+
 export default function TripleDotMenu() {
+
+    let [showDrawer, setshowDrawer] = useDrawerContext()
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -42,7 +47,7 @@ export default function TripleDotMenu() {
                     horizontal:"right"
                 }}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={() => { setshowDrawer(true) }}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
             </Menu>
