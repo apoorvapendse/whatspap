@@ -4,13 +4,16 @@ import './styles/LoginPage.css'
 import { GoogleLogin,useGoogleOneTapLogin } from '@react-oauth/google';
 import jwtDecode from 'jwt-decode'
 import LoginContext from '../user-context/UserLoginContext';
+import {addUser, getUsers} from '../../apis/api.js'
 
 const LoginPage = () => {
 
+
   const {currentUser, setCurrentUser }= useContext(LoginContext);
-  const handleLoginSuccess = (response)=>{
+  const handleLoginSuccess = async (response)=>{
    
     const userData = jwtDecode(response.credential)
+    await addUser(userData);
     setCurrentUser(userData);
   }
   const handleLoginFailure =(response)=>{console.log(response)}

@@ -2,7 +2,7 @@ import { Box, InputBase } from '@mui/material'
 import React from 'react'
 import {Search} from '@mui/icons-material'
 
-const SearchBar = () => {
+const SearchBar = ({setQuery}) => {
   return (
     <Box
         sx={{
@@ -28,6 +28,9 @@ const SearchBar = () => {
         >
             <Search /> <InputBase
             placeholder='search or start a new chat'
+            onChange={(e)=>{console.log("changed");
+            setQuery(e.target.value) 
+        }}
             /> 
         </Box>
 
