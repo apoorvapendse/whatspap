@@ -7,10 +7,12 @@ import OneConvoDisplay from './OneConvoDisplay';
 
 const Conversations = ({query}) => {
     const [users,setUsers] = useState([]);
-    const{currentUser,setCurrentUser} = useContext(LoginContext);
+    const{currentUser,setCurrentUser,currentChatter,socket,activeUsers,setActiveUsers} = useContext(LoginContext);
+    
     console.log("currentUser",currentUser.name)
 
     useEffect(() => {
+      //this will run when component mounts
       //this will run when component mounts
         const fetchAllUsers = async()=>{
             console.log("query:",query)
@@ -34,6 +36,14 @@ const Conversations = ({query}) => {
       
     }, [query])
     
+    useEffect(()=>{
+        socket.current.emit("addSocketUsers",currentUser)
+        socket.current.on("getSocketUsers",users=>{
+            setActiveUsers(users);
+            console.log("active users at frontend:",activeUsers)
+        })
+
+    }, [currentChatter])
 
   return (
     <Box sx={{

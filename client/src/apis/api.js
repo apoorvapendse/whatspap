@@ -53,6 +53,7 @@ export async function newMessage(message){
     const url = 'http://localhost:5000';
     try {
         let response = await axios.post(`${url}/message/add`,{message})
+        
         return response.data;
         
     } catch (error) {

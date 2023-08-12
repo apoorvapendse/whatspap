@@ -6,15 +6,15 @@ import ChatInputBox from './ChatInputBox'
 import LoginContext from '../../user-context/UserLoginContext'
 import { getMessages, newMessage } from '../../../apis/api.js'
 
-
 const ChatDisplay = () => {
 
-  const {currentUser,currentChatter} = useContext(LoginContext);
+  const {currentUser,currentChatter,socket} = useContext(LoginContext);
   const { convo, setConvo } = useContext(LoginContext)
   const [message, setMessage] = useState("");
   const [previousMessages, setPreviousMessages] = useState([]);
   const [file,setFile] = useState();
   const [image, setImage] = useState('');
+  const [incomingMessage,setIncomingMessage] = useState(null);
 
 
 
@@ -28,6 +28,15 @@ const ChatDisplay = () => {
     }
     getPrevMessages();
   }, [convo,message])
+
+  useEffect(()=>{
+    socket.current.on("getMessage",data=>{
+      setIncomingMessage({...data,
+        createdAt:Date.now()})
+    })
+
+    
+  ,[]})
   
 
   async function sendText(keyPressCode,message){
@@ -57,6 +66,7 @@ const ChatDisplay = () => {
         }
       }
 
+      socket.current.emit("sendSocketMessage",msg)
     await newMessage(msg);
     setMessage("")
     setImage("");

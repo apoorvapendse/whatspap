@@ -5,7 +5,7 @@ import { More, MoreVert, Search } from '@mui/icons-material'
 
 
 const ChatDisplayHeader = () => {
-    const {currentUser,setCurrentUser,currentChatter} = useContext(LoginContext);
+    const {currentUser,setCurrentUser,currentChatter,activeUsers} = useContext(LoginContext);
     return (
     <Box
     sx={{
@@ -28,7 +28,11 @@ const ChatDisplayHeader = () => {
     <img src= {currentChatter.picture} style={{height:"50px",borderRadius:"50%"}}srcset="" />
     <Box sx={{color:"white",fontSize:"15px",display:"flex",flexDirection:"column",gap:"5px",margin:"4px",}}>
                         <span style={{ fontSize: "16px" }}>{currentChatter.name}</span>
-                        <span style={{ fontSize: "11.5px" }}>Online</span>
+                        <span style={{ fontSize: "11.5px" }}>
+                            
+                            {activeUsers.find(user=>currentChatter.sub===user.sub)?'online':'offline'}
+                            
+                            </span>
     </Box>
     </Box>
                 <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",gap:"12px"}}>

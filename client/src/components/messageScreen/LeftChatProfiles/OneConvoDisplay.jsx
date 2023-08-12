@@ -5,7 +5,7 @@ import { setConversation,getConvo } from '../../../apis/api.js'
 
 
 const OneConvoDisplay = ({user}) => {
-    const {currentChatter,setCurrentChatter,currentUser,setConvo} = useContext(LoginContext);
+    const {currentChatter,setCurrentChatter,currentUser,setConvo,activeUsers} = useContext(LoginContext);
 
     async function showUserInfo(){
         
