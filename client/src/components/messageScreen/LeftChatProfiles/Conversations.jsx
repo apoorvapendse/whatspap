@@ -38,8 +38,8 @@ const Conversations = ({query}) => {
     
     useEffect(()=>{
         socket.current.emit("addSocketUsers",currentUser)
-        socket.current.on("getSocketUsers",users=>{
-            setActiveUsers(users);
+        socket.current.on("getSocketUsers", active_users =>{
+    setActiveUsers(active_users);
             console.log("active users at frontend:",activeUsers)
         })
 
@@ -53,10 +53,10 @@ const Conversations = ({query}) => {
     }}>
         {
 
-            users.map((item)=>{
+            users?.map((item)=>{
                 
                 
-                if(item.sub!==currentUser.sub){
+                if(item?.sub!==currentUser?.sub){
                     return(
 
                         <OneConvoDisplay user={item}/>

@@ -8,8 +8,7 @@ const io = new Server(7000,{
 let activeUsers = []
 const addUser  = (userData,socketid)=>{
     !activeUsers.some(user=>user.sub===userData.sub) && (activeUsers.push({...userData,socketid}))
-    console.log("activeUsers",activeUsers)
-    console.log("addUsers called on socket")
+     console.log("addUsers called on socket")
 
 }
 
@@ -31,7 +30,9 @@ io.on("connection",(socket)=>{
 
     socket.on("sendSocketMessage",data=>{
         const receiverSocket = getUser(data.receiverID);
-        io.to(receiverSocket.socketid).emit('getMessage',data)
+        console.log("receiversocket:",receiverSocket.socketid);
+        console.log(data)
+        io.to(receiverSocket.sokcetid).emit('getMessage',data)
 
     })
 

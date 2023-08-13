@@ -6,7 +6,7 @@ import LoginContext from '../../user-context/UserLoginContext';
 import { uploadFile } from '../../../apis/api';
 
 
-const ChatInputBox = ({sendText,setMessage,message,file,setFile,setImage}) => {
+const ChatInputBox = ({sendText,setMessage,message,file,setFile,setImage,setNewMessageFlag}) => {
  
 
   useEffect(() => {
@@ -71,7 +71,13 @@ const ChatInputBox = ({sendText,setMessage,message,file,setFile,setImage}) => {
       onChange={(e)=>{
         setMessage(e.target.value)
       }}
-      onKeyDown={(e)=>{sendText(e.keyCode,message);setMessage(message)}}
+      onKeyDown={(e)=>{
+        if(e.keyCode===13){
+
+          sendText(e.keyCode,message)
+        }
+        
+        ;}}
       />
       <MicIcon/>
       </Box>

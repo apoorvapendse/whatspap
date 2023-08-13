@@ -24,7 +24,7 @@ export const getUsers = async(req,res)=>{
         const allUsers = await Users.find();
         return res.status(200).json(allUsers)
     } catch (error) {
-        response.status(500).json(error.message) 
+        res.status(500).json(error.message) 
     }
 }
 

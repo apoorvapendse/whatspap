@@ -9,6 +9,7 @@ import { getMessages, newMessage } from '../../../apis/api.js'
 const ChatDisplay = () => {
 
   const {currentUser,currentChatter,socket} = useContext(LoginContext);
+  const [newMessageFlag,setNewMessageFlag] = useState(false);
   const { convo, setConvo } = useContext(LoginContext)
   const [message, setMessage] = useState("");
   const [previousMessages, setPreviousMessages] = useState([]);
@@ -18,25 +19,33 @@ const ChatDisplay = () => {
 
 
 
+  useEffect(() => {
+    console.log("Setting up socket listener");
+    socket.current.on("getMessage", data => {
+      console.log("Received socket message:", data);
+      setIncomingMessage({ ...data, createdAt: Date.now() });
+    });
+  }, [socket]);
+  
   let messages = [];
   useEffect(() => {
     const getPrevMessages = async () => {
 
       let messages = await getMessages(convo._id);
       setPreviousMessages(messages)
-      console.log(previousMessages)
+      console.log(previousMessages) 
     }
     getPrevMessages();
-  }, [convo,message])
+  }, [convo,currentChatter,newMessageFlag])
 
-  useEffect(()=>{
-    socket.current.on("getMessage",data=>{
-      setIncomingMessage({...data,
-        createdAt:Date.now()})
-    })
 
+  
+  useEffect(() => {
+    console.log("incoming message",incomingMessage)
+    incomingMessage && convo?.members?.includes(incomingMessage.senderID)&&
+    setPreviousMessages(prev=>[...prev,incomingMessage])
     
-  ,[]})
+  }, [incomingMessage,currentChatter])
   
 
   async function sendText(keyPressCode,message){
@@ -86,7 +95,7 @@ const ChatDisplay = () => {
     >
        <ChatDisplayHeader/>
        <ChatDisplayMsgs sender={currentUser.sub} receiver={currentChatter.sub} previousMessages={previousMessages} />
-       <ChatInputBox sendText = {sendText} setMessage={setMessage} message={message} file={file} setFile = {setFile} setImage={setImage}/>
+       <ChatInputBox sendText = {sendText} setMessage={setMessage} message={message} file={file} setFile = {setFile} setImage={setImage} setNewMessageFlag={setNewMessageFlag}/>
     </Box>
 
   )
